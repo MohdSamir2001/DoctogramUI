@@ -6,9 +6,11 @@ import LoginPage from "../pages/LoginPage";
 import UserProfilePage from "../pages/UserProfilePage";
 import MyAppointmentsPage from "../pages/MyAppointmentsPage";
 import AppointmentPage from "../pages/AppointmentPage";
+import Navbar from "../components/Navbar";
 const AppRoutes = () => {
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/doctors" element={<DoctorsPage />} />
