@@ -7,9 +7,11 @@ import UserProfilePage from "../pages/UserProfilePage";
 import MyAppointmentsPage from "../pages/MyAppointmentsPage";
 import AppointmentPage from "../pages/AppointmentPage";
 import Navbar from "../components/Navbar";
+import AboutPage from "../pages/AboutPage";
+import ContactPage from "../pages/ContactPage";
 const AppRoutes = () => {
   return (
-    <div>
+    <div className="mx-4 sm:mx-[10%]">
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -18,7 +20,9 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/user-profile" element={<UserProfilePage />} />
         <Route path="/user-appointments" element={<MyAppointmentsPage />} />
-        <Route path="/user-appointments" element={<AppointmentPage />} />
+        <Route path="/appointment" element={<AppointmentPage />} />
+        <Route path="/about-page" element={<AboutPage />} />
+        <Route path="/contact-page" element={<ContactPage />} />
         <Route path="/appointment/:doctorId" element={<AppointmentPage />} />
         <Route />
       </Routes>
