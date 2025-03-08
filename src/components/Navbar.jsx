@@ -10,8 +10,13 @@ const Navbar = () => {
     setToken(false);
     navigate("/");
   };
+  const handleCloseMenu = () => {
+    setTimeout(() => {
+      setShowMenu(false);
+    }, 50); // Small delay to avoid flickering
+  };
   return (
-    <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-[#ADADAD]">
+    <div className="flex items-center justify-between text-sm px-1 py-4 mb-5 border-b border-b-[#ADADAD]">
       <div className="flex">
         <div
           onClick={() => navigate("/")}
@@ -100,13 +105,19 @@ const Navbar = () => {
         {/* ---- Mobile Menu ---- */}
         <div
           className={`md:hidden ${
-            showMenu ? "fixed w-full" : "h-0 w-0"
+            showMenu ? "fixed w-full" : "hidden"
           } right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}
         >
-          <div className="flex items-center justify-between px-5 py-6">
-            <img src={assets.logo} className="w-36" alt="" />
+          <div className="flex items-center justify-between px-5 py-4">
+            <div
+              onClick={() => navigate("/")}
+              className="w-44 font-bold text-2xl cursor-pointer"
+            >
+              {" "}
+              DOCTO
+            </div>
             <img
-              onClick={() => setShowMenu(false)}
+              onClick={handleCloseMenu}
               src={assets.cross_icon}
               className="w-7"
               alt=""
