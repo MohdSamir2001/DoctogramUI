@@ -1,16 +1,12 @@
 import React from "react";
-import { assets } from "../assets/assets";
 import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
-import { useNavigate } from "react-router";
 
 const FootInfo = () => {
-  const navigate = useNavigate();
-
   const handleNavigation = () => {
     window.scrollTo({ top: 0, behavior: "smooth" }); // Scrolls to the top smoothly
   };
