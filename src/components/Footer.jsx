@@ -1,35 +1,38 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router";
+import Lottie from "lottie-react";
+import animationData4 from "../utils/animation4.json";
 
 const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex bg-slate-700 rounded-lg  px-6 sm:px-10 md:px-14 lg:px-12 my-8 md:mx-10">
+    <div className="flex flex-col md:flex-row bg-slate-600 rounded-lg px-6 sm:px-10 md:px-14 lg:px-12 my-8 md:mx-10 items-center">
       {/* ------- Left Side ------- */}
-      <div className="flex-1 py-8 sm:py-10 md:py-16 lg:py-24 lg:pl-5">
-        <div className="text-xl lg:leading-8 sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white">
-          <p className="lg:text-5xl">Book Appointment</p>
-          <p className="mt-4">With 100+ Trusted Doctors</p>
-        </div>
+      <div className="md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left gap-4 py-6 sm:py-8 md:py-12">
+        <p className="font-semibold text-white text-2xl sm:text-3xl md:text-4xl leading-tight">
+          Book your appointment with 100+ trusted doctors.
+        </p>
+
         <button
           onClick={() => {
             navigate("/login");
             scrollTo(0, 0);
           }}
-          className="bg-white cursor-pointer text-sm sm:text-base text-[#595959] px-6 py-2 rounded-full mt-6 hover:text-white hover:font-semibold hover:bg-black hover:scale-105 transition-all "
+          className="flex items-center gap-2 bg-white text-[#595959] font-medium hover:text-white cursor-pointer hover:bg-black transition-all duration-300 px-5 py-2 rounded-full shadow-lg hover:scale-105"
         >
-          Create account
+          Create Account
+          <img className="w-4" src={assets.arrow_icon} alt="Arrow" />
         </button>
       </div>
 
-      {/* ------- Right Side ------- */}
-      <div className="hidden md:block md:w-1/2 lg:w-[370px] relative">
-        <img
-          className="w-full absolute bottom-0 right-0 max-w-md"
-          src={assets.appointment_img}
-          alt=""
+      {/* ------- Right Side (Lottie Animation) ------- */}
+      <div className="w-full md:w-1/2 flex justify-center">
+        <Lottie
+          className="w-[180px] sm:w-[250px] md:w-[300px] lg:w-[370px]"
+          animationData={animationData4}
+          loop={true}
         />
       </div>
     </div>

@@ -13,7 +13,7 @@ const FootInfo = () => {
 
   return (
     <div className="md:mx-10">
-      <div className="bg-slate-700 font-semibold rounded-md my-6 text-white py-12 md:px-10">
+      <div className="bg-slate-600 font-semibold rounded-md my-6 text-white py-12 md:px-10">
         <div className="flex flex-col sm:grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-10 mb-8">
           {/* --- Logo & About --- */}
           <div>
