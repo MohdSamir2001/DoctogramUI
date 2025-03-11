@@ -16,7 +16,7 @@ const Navbar = () => {
     }, 50); // Small delay to avoid flickering
   };
   return (
-    <div className="flex items-center justify-between text-sm px-1 py-4 mb-5 border-b border-b-[#ADADAD]">
+    <div className="flex items-center relative z-10 justify-between text-sm px-1 py-4 mb-5 border-b border-b-[#ADADAD]">
       <div className="flex">
         <div
           onClick={() => navigate("/")}
