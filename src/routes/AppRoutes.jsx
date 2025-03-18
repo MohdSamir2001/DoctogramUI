@@ -9,6 +9,8 @@ import AppointmentPage from "../pages/AppointmentPage";
 import Navbar from "../components/Navbar";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
+import Pharmacy from "../pages/Pharmacy";
+import CartPage from "../pages/CartPage";
 const AppRoutes = () => {
   return (
     <div className="mx-4 sm:mx-[10%]">
@@ -21,6 +23,8 @@ const AppRoutes = () => {
         <Route path="/user-profile" element={<UserProfilePage />} />
         <Route path="/user-appointments" element={<MyAppointmentsPage />} />
         <Route path="/appointment" element={<AppointmentPage />} />
+        <Route path="/pharmacy" element={<Pharmacy />} />
+        <Route path="/cart-page" element={<CartPage />} />
         <Route path="/about-page" element={<AboutPage />} />
         <Route path="/contact-page" element={<ContactPage />} />
         <Route path="/appointment/:doctorId" element={<AppointmentPage />} />
