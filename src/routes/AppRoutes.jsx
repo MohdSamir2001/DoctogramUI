@@ -11,6 +11,9 @@ import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
 import Pharmacy from "../pages/Pharmacy";
 import CartPage from "../pages/CartPage";
+import OrderPage from "../pages/OrderPage";
+import OrderConfirmationPage from "../pages/OrderConfirmationPage";
+import OrdersPage from "../pages/OrdersPage";
 const AppRoutes = () => {
   return (
     <div className="mx-4 sm:mx-[10%]">
@@ -20,6 +23,10 @@ const AppRoutes = () => {
         <Route path="/doctors" element={<DoctorsPage />} />
         <Route path="/doctors/:speciality" element={<DoctorsPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
+
+        <Route path="/order-page" element={<OrderPage />} />
         <Route path="/user-profile" element={<UserProfilePage />} />
         <Route path="/user-appointments" element={<MyAppointmentsPage />} />
         <Route path="/appointment" element={<AppointmentPage />} />

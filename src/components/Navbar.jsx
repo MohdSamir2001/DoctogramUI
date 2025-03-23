@@ -2,13 +2,29 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router";
 import profile_pic from "../assets/userImage/profile_pic.png";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../utils/userSlice";
+import axios from "axios";
 const Navbar = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(true);
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
   const [showMenu, setShowMenu] = useState(false);
-  const handleLogout = () => {
-    setToken(false);
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:1234/api/user/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeUser());
+      setuser(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleCloseMenu = () => {
     setTimeout(() => {
@@ -64,9 +80,9 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-4 ">
-        {token ? (
+        {user ? (
           <div className="flex items-center gap-2 cursor-pointer group relative">
-            <img className="w-8 rounded-full" src={profile_pic} alt="" />
+            <img className="w-8 rounded-full" src={user.image} alt="" />
             <img className="w-2.5" src={assets.dropdown_icon} alt="" />
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
               <div className="min-w-48 bg-gray-50 rounded flex flex-col gap-4 p-4">
@@ -81,6 +97,18 @@ const Navbar = () => {
                   className="hover:text-black cursor-pointer"
                 >
                   My Appointments
+                </p>
+                <p
+                  onClick={() => navigate("/orders")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Orders
+                </p>
+                <p
+                  onClick={() => navigate("/cart-page")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Cart
                 </p>
                 <p
                   onClick={handleLogout}

@@ -1,14 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setUser } from "../utils/userSlice";
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -31,7 +34,11 @@ const Login = () => {
         draggable: true,
         theme: "dark",
       });
-
+      const response = await axios.get(
+        "http://localhost:1234/api/user/profile",
+        { withCredentials: true }
+      );
+      dispatch(setUser(response?.data?.data));
       setTimeout(() => navigate("/"), 1000); // Delay to allow toast to show
     } catch (error) {
       console.error("Login Failed:", error); // Debugging

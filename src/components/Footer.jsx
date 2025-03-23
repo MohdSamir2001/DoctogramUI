@@ -2,7 +2,7 @@ import React from "react";
 import { assets } from "../assets/assets";
 import { useNavigate } from "react-router";
 import Lottie from "lottie-react";
-import animationData4 from "../utils/animation4.json";
+import animationData4 from "../utils/animations/animation4.json";
 
 const Footer = () => {
   const navigate = useNavigate();

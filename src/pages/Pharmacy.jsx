@@ -30,6 +30,7 @@ const Pharmacy = () => {
       console.error("Error fetching cart items", error);
     }
   };
+
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
@@ -49,7 +50,14 @@ const Pharmacy = () => {
     fetchCartItems(); // Fetch cart data on mount
   }, []);
 
-  const handleAddToCart = async (productId) => {
+  const handleAddToCart = async (productId, quantityInStore) => {
+    if (quantityInStore === 0) {
+      toast.warning(
+        "This item is currently out of stock, we will restock it soon."
+      );
+      return;
+    }
+
     try {
       await axios.post(
         "http://localhost:1234/api/user/cart/add",
@@ -115,23 +123,29 @@ const Pharmacy = () => {
               </div>
               <p className="text-xs text-gray-500">Inclusive of all taxes</p>
 
+              {med.quantityInStore === 0 ? (
+                <p className="text-red-600 font-semibold text-sm mt-2">
+                  We will restock this item soon
+                </p>
+              ) : null}
+
               <button
                 className={`w-full flex items-center justify-center gap-2 mt-4 py-2 rounded-lg font-semibold transition-colors duration-300 ${
-                  med.stock
+                  med.quantityInStore > 0
                     ? addedToCart[med._id]
                       ? "bg-green-600 text-white hover:bg-green-700"
                       : "bg-blue-600 text-white hover:bg-blue-700"
                     : "bg-gray-400 text-white cursor-not-allowed"
                 }`}
-                disabled={!med.stock}
+                disabled={med.quantityInStore === 0}
                 onClick={() =>
                   addedToCart[med._id]
                     ? navigate("/cart-page")
-                    : handleAddToCart(med._id)
+                    : handleAddToCart(med._id, med.quantityInStore)
                 }
               >
                 <FaShoppingCart />
-                {med.stock
+                {med.quantityInStore > 0
                   ? addedToCart[med._id]
                     ? "Go to Cart"
                     : "Add To Cart"

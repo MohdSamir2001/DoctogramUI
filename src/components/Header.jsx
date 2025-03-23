@@ -1,8 +1,8 @@
 import React from "react";
 import { assets } from "../assets/assets";
 import Lottie from "lottie-react";
-import animationData from "../utils/animation1.json";
-import animationData3 from "../utils/animation3.json";
+import animationData from "../utils/animations/animation1.json";
+import animationData3 from "../utils/animations/animation3.json";
 
 const Header = () => {
   return (
