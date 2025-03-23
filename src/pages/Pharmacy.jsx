@@ -11,14 +11,13 @@ const Pharmacy = () => {
   const [addedToCart, setAddedToCart] = useState({});
   const navigate = useNavigate();
 
-  const quantity = 1;
-
-  // Fetch user's cart items
   const fetchCartItems = async () => {
     try {
       const response = await axios.get(
         `http://localhost:1234/api/user/cart/get`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
       const cartItems = response.data;
       const cartMap = {};
@@ -47,7 +46,7 @@ const Pharmacy = () => {
     };
 
     fetchMedicines();
-    fetchCartItems(); // Fetch cart data on mount
+    fetchCartItems();
   }, []);
 
   const handleAddToCart = async (productId, quantityInStore) => {
@@ -59,13 +58,28 @@ const Pharmacy = () => {
     }
 
     try {
-      await axios.post(
+      const response = await axios.post(
         "http://localhost:1234/api/user/cart/add",
-        { productId, quantity },
+        { productId, quantity: 1 }, // Always adding 1 quantity
         { withCredentials: true }
       );
+
       toast.success("Medicine added to cart");
       setAddedToCart((prev) => ({ ...prev, [productId]: true }));
+
+      // Reduce quantityInStore locally
+      setMedicines((prevMedicines) =>
+        prevMedicines.map((med) =>
+          med._id === productId
+            ? { ...med, quantityInStore: med.quantityInStore - 1 }
+            : med
+        )
+      );
+
+      // Show warning if stock is low
+      if (response.data.warning) {
+        toast.warning(response.data.warning);
+      }
     } catch (err) {
       toast.error("Failed to add medicine to cart");
     }

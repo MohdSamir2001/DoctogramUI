@@ -10,23 +10,7 @@ import { setUser } from "../utils/userSlice";
 
 const HomePage = () => {
   const user = useSelector((store) => store.user);
-  const dispatch = useDispatch();
-  const fetchUser = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:1234/api/user/profile",
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(setUser(response?.data?.data));
-    } catch (error) {
-      console.error("Error fetching user data: ", error);
-    }
-  };
-  useEffect(() => {
-    !user && fetchUser();
-  }, []);
+
   return (
     <div className="">
       <Header />

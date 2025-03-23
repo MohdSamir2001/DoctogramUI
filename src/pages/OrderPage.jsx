@@ -14,9 +14,7 @@ const OrderPage = () => {
     try {
       const response = await axios.get(
         "http://localhost:1234/api/user/cart/get",
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       setCartItems(response.data);
     } catch (error) {
@@ -25,26 +23,34 @@ const OrderPage = () => {
   };
 
   const totalPrice = cartItems.reduce(
-    (total, item) => total + item.productId.price * item.quantity,
+    (total, item) => total + item.productId.price * item.quantity * 0.85,
     0
   );
 
   const handlePlaceOrder = async () => {
-    await axios.post(
-      "http://localhost:1234/api/user/cart/create-order",
-      {
-        medicines: cartItems.map((item) => ({
-          medicineId: item.productId._id,
-          quantity: item.quantity,
-        })),
-        totalPrice: cartItems.reduce(
-          (total, item) => total + item.productId.price * item.quantity * 0.85,
-          0
-        ),
-      },
-      { withCredentials: true }
-    );
-    navigate("/order-confirmation");
+    try {
+      await axios.post(
+        "http://localhost:1234/api/user/cart/create-order",
+        {
+          medicines: cartItems.map((item) => ({
+            medicineId: item.productId._id,
+            quantity: item.quantity,
+          })),
+          totalPrice,
+        },
+        { withCredentials: true }
+      );
+
+      // ✅ Clear the cart after order is placed
+      await axios.delete("http://localhost:1234/api/user/cart/clear", {
+        withCredentials: true,
+      });
+
+      // ✅ Navigate to order confirmation page
+      navigate("/order-confirmation");
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
   };
 
   return (
@@ -61,7 +67,7 @@ const OrderPage = () => {
               <p className="font-medium text-gray-800">{item.productId.name}</p>
               <p className="text-gray-600">Quantity: {item.quantity}</p>
               <p className="text-gray-800 font-semibold">
-                Rs {item.productId.price * item.quantity}
+                Rs {item.productId.price * item.quantity * 0.85}
               </p>
             </div>
           ))}

@@ -17,7 +17,6 @@ const CartPage = () => {
         "http://localhost:1234/api/user/cart/get",
         { withCredentials: true }
       );
-
       const validCartItems = response.data.filter((item) => item.productId);
       setCartItems(validCartItems);
     } catch (error) {
@@ -25,46 +24,51 @@ const CartPage = () => {
     }
   };
 
-  const handleDelete = async (productId) => {
+  const handleDelete = async (cartId) => {
     try {
       await axios.post(
         "http://localhost:1234/api/user/cart/remove/",
-        { productId },
+        { cartId },
         { withCredentials: true }
       );
-
       setCartItems((prevItems) =>
-        prevItems.filter((item) => item.productId?._id !== productId)
+        prevItems.filter((item) => item._id !== cartId)
       );
     } catch (error) {
       console.error("Error deleting item:", error);
     }
   };
 
-  const handleQuantityChange = async (productId, change) => {
+  const handleQuantityChange = async (cartId, action) => {
     try {
       const response = await axios.put(
         "http://localhost:1234/api/user/cart/update",
-        { productId, change },
+        { cartId, action },
         { withCredentials: true }
       );
 
       setCartItems((prevItems) =>
         prevItems.map((item) =>
-          item.productId._id === productId
+          item._id === cartId
             ? {
                 ...item,
-                quantity: item.quantity + change,
+                quantity: response.data.cartItem.quantity,
                 productId: {
                   ...item.productId,
-                  quantityInStore: item.productId.quantityInStore - change, // Decrease quantityInStore
+                  quantityInStore:
+                    response.data.cartItem.productId.quantityInStore,
                 },
               }
             : item
         )
       );
+
+      if (response.data.warning) {
+        alert(response.data.warning);
+      }
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      console.error("Error updating quantity:", error.response?.data?.message);
+      alert(error.response?.data?.message || "Failed to update quantity");
     }
   };
 
@@ -95,7 +99,7 @@ const CartPage = () => {
 
               return (
                 <div
-                  key={item.productId._id}
+                  key={item._id}
                   className="flex items-center bg-white p-4 rounded-lg shadow-sm"
                 >
                   <img
@@ -137,7 +141,7 @@ const CartPage = () => {
                       <button
                         className="bg-gray-300 px-3 py-1 rounded-l-lg disabled:opacity-50"
                         onClick={() =>
-                          handleQuantityChange(item.productId._id, -1)
+                          handleQuantityChange(item._id, "decrease")
                         }
                         disabled={item.quantity === 1}
                       >
@@ -147,7 +151,7 @@ const CartPage = () => {
                       <button
                         className="bg-gray-300 px-3 py-1 rounded-r-lg disabled:opacity-50"
                         onClick={() =>
-                          handleQuantityChange(item.productId._id, 1)
+                          handleQuantityChange(item._id, "increase")
                         }
                         disabled={remainingStock <= 0}
                       >
@@ -157,7 +161,7 @@ const CartPage = () => {
                   </div>
 
                   <button
-                    onClick={() => handleDelete(item.productId._id)}
+                    onClick={() => handleDelete(item._id)}
                     className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition"
                   >
                     <FaTrash className="w-5 h-5" />
@@ -184,7 +188,7 @@ const CartPage = () => {
                   discountedPrice * item.quantity
                 ).toFixed(2);
                 return (
-                  <div key={item.productId._id} className="border-b py-2">
+                  <div key={item._id} className="border-b py-2">
                     <p className="font-medium text-gray-800">
                       {item.productId.name}
                     </p>
@@ -204,12 +208,15 @@ const CartPage = () => {
                 <p>Rs {totalPrice.toFixed(2)}</p>
               </div>
 
-              <button
-                onClick={() => navigate("/order-page")}
-                className="mt-4 w-full font-semibold bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
-              >
-                Proceed to Checkout
-              </button>
+              {/* Proceed to Checkout Button */}
+              <div className="mt-6 text-center">
+                <button
+                  onClick={() => navigate("/order-page")}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300"
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
             </div>
           </div>
         </div>
