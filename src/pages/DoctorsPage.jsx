@@ -71,15 +71,15 @@ const DoctorsPage = () => {
               <div className="p-5 text-center">
                 <div
                   className={`flex items-center justify-center gap-2 text-sm font-medium ${
-                    item.available ? "text-green-500" : "text-red-500"
+                    item.avaliable ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   <span
                     className={`w-3 h-3 rounded-full ${
-                      item.available ? "bg-green-500" : "bg-red-500"
+                      item.avaliable ? "bg-green-500" : "bg-red-500"
                     }`}
                   ></span>
-                  <p>{item.available ? "Available" : "Not Available"}</p>
+                  <p>{item.avaliable ? "Avaliable" : "Not avaliable"}</p>
                 </div>
                 <p className="text-xl font-semibold text-gray-800 mt-2">
                   {item.name}
@@ -90,7 +90,7 @@ const DoctorsPage = () => {
           ))
         ) : (
           <p className="text-gray-600 text-center col-span-full">
-            No doctors available in this category.
+            No doctors avaliable in this category.
           </p>
         )}
       </div>
