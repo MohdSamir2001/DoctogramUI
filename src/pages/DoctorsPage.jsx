@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { doctors } from "../assets/assets";
 
 const categories = [
   "General physician",
@@ -15,7 +15,7 @@ const DoctorsPage = () => {
   const { speciality } = useParams();
   const [filterDoc, setFilterDoc] = useState([]);
   const navigate = useNavigate();
-
+  const doctors = useSelector((store) => store.doctors);
   useEffect(() => {
     if (speciality) {
       setFilterDoc(doctors.filter((doc) => doc.speciality === speciality));

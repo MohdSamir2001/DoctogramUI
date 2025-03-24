@@ -17,9 +17,24 @@ import OrdersPage from "../pages/OrdersPage";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../utils/userSlice";
+import { addDoctors } from "../utils/doctorsSlice";
 const AppRoutes = () => {
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.user);
+
+  const fetchDoctors = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:1234/api/user/all-doctors",
+        {
+          withCredentials: true,
+        }
+      );
+
+      dispatch(addDoctors(response?.data?.doctors));
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
+    }
+  };
   const fetchUser = async () => {
     try {
       const response = await axios.get(
@@ -34,7 +49,8 @@ const AppRoutes = () => {
     }
   };
   useEffect(() => {
-    !user && fetchUser();
+    fetchDoctors();
+    fetchUser();
   }, []);
   return (
     <div className="mx-4 sm:mx-[10%]">
@@ -55,7 +71,7 @@ const AppRoutes = () => {
         <Route path="/cart-page" element={<CartPage />} />
         <Route path="/about-page" element={<AboutPage />} />
         <Route path="/contact-page" element={<ContactPage />} />
-        <Route path="/appointment/:doctorId" element={<AppointmentPage />} />
+        <Route path="/appointment/:docId" element={<AppointmentPage />} />
         <Route />
       </Routes>
     </div>

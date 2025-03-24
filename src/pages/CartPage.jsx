@@ -28,7 +28,7 @@ const CartPage = () => {
     try {
       await axios.post(
         "http://localhost:1234/api/user/cart/remove/",
-        { cartId },
+        { cartId }, // Send cartId instead of productId
         { withCredentials: true }
       );
       setCartItems((prevItems) =>
