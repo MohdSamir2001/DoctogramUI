@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { doctors } from "../assets/assets";
+import { useSelector } from "react-redux";
 const TopDoctors = () => {
   const navigate = useNavigate();
-
+  const doctors = useSelector((store) => store.doctors);
   return (
     <div className="flex flex-col items-center gap-6 my-1 text-[#262626] px-4 md:px-10">
       <h1 className="text-4xl font-semibold text-center">

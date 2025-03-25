@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router";
 import HomePage from "../pages/HomePage";
 import DoctorsPage from "../pages/DoctorsPage";
 import LoginPage from "../pages/LoginPage";
-import UserProfilePage from "../pages/UserProfilePage";
+import UserProfilePage from "../pages/MyProfile";
 import MyAppointmentsPage from "../pages/MyAppointmentsPage";
 import AppointmentPage from "../pages/AppointmentPage";
 import Navbar from "../components/Navbar";
@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setUser } from "../utils/userSlice";
 import { addDoctors } from "../utils/doctorsSlice";
+import MyProfile from "../pages/MyProfile";
 const AppRoutes = () => {
   const dispatch = useDispatch();
 
@@ -64,7 +65,7 @@ const AppRoutes = () => {
         <Route path="/orders" element={<OrdersPage />} />
 
         <Route path="/order-page" element={<OrderPage />} />
-        <Route path="/user-profile" element={<UserProfilePage />} />
+        <Route path="/user-profile" element={<MyProfile />} />
         <Route path="/user-appointments" element={<MyAppointmentsPage />} />
         <Route path="/appointment" element={<AppointmentPage />} />
         <Route path="/pharmacy" element={<Pharmacy />} />
