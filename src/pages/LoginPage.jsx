@@ -81,8 +81,7 @@ const Login = () => {
         {/* Login Form */}
         <form onSubmit={onSubmitHandler} className="mt-0">
           <div className="text-3xl flex justify-center gap-2 font-bold text-white mb-5">
-            <h1>{activeTab}</h1>
-            <h1 className="text-gray-400">Login</h1>
+            <h1 className="mt-6">{activeTab}</h1>
           </div>
           {activeTab === "New User" && (
             <div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
+import { addDoctors } from "../utils/doctorsSlice";
+import axios from "axios";
 
 const categories = [
-  "General physician",
+  "General Physician",
   "Gynecologist",
   "Dermatologist",
   "Pediatricians",
@@ -15,7 +17,25 @@ const DoctorsPage = () => {
   const { speciality } = useParams();
   const [filterDoc, setFilterDoc] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const doctors = useSelector((store) => store.doctors);
+  useEffect(
+    () => async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:1234/api/user/all-doctors",
+          {
+            withCredentials: true,
+          }
+        );
+
+        dispatch(addDoctors(response?.data?.doctors));
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    },
+    []
+  );
   useEffect(() => {
     if (speciality) {
       setFilterDoc(doctors.filter((doc) => doc.speciality === speciality));
@@ -60,13 +80,14 @@ const DoctorsPage = () => {
               className="border border-gray-300 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 bg-white"
             >
               {/* Image Container */}
-              <div className="w-full min-h-[220px] bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-2xl">
+              <div className="w-full h-[220px] bg-gray-100 overflow-hidden rounded-t-2xl">
                 <img
-                  className="w-full h-full sm:object-cover object-contain"
+                  className="w-full h-full object-contain "
                   src={item.image}
                   alt={item.name}
                 />
               </div>
+
               {/* Doctor Info */}
               <div className="p-5 text-center">
                 <div
