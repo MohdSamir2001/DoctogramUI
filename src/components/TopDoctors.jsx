@@ -23,10 +23,9 @@ const TopDoctors = () => {
             }}
             className="border border-gray-300 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 bg-white"
           >
-            {/* Image Container */}
-            <div className="w-full min-h-[220px] bg-gray-100 flex items-center justify-center overflow-hidden rounded-t-2xl">
+            <div className="w-full h-[220px] bg-gray-100 overflow-hidden rounded-t-2xl">
               <img
-                className="w-full h-full sm:object-cover object-contain"
+                className="w-full h-full object-contain "
                 src={item.image}
                 alt={item.name}
               />
